@@ -1,0 +1,47 @@
+Get ready to upgrade
+# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# yum -y install rpmconf yum-utils
+ 
+Resolve all config stuff.
+# rpmconf -a
+ 
+Packages you might not need/require, remove if something doens't seem to be required.
+# package-cleanup --leaves
+# package-cleanup --orphans
+ 
+Install DNF.
+# yum -y install dnf
+ 
+Remove yum
+# dnf -y remove yum yum-metadata-parser
+rm -Rf /etc/yum
+ 
+Upgrade system to be up-to-date
+# dnf -y upgrade
+ 
+Install new versions:
+# dnf -y upgrade http://mirror.bytemark.co.uk/centos/8/BaseOS/x86_64/os/Packages/centos-release-8.0-0.1905.0.9.el8.x86_64.rpm
+ 
+Upgrade EPEL
+# dnf -y upgrade https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+ 
+Dnf clean
+# dnf clean all
+ 
+Remove definitely conflicting stuff.
+# rpm -e --nodeps sysvinit-tools
+ 
+Try to run the upgrade
+# dnf -y --releasever=8 --allowerasing --setopt=deltarpm=false distro-sync
+
+ 
+Process new configs
+# rpmconf -a
+ 
+Ensure kernel is properly installed
+# rpm -e kernel-core
+dnf -y install kernel-core
+ 
+
+Install the new packages that is in the Core/Minimum Install:
+# dnf -y groupupdate "Core" "Minimal Install"
